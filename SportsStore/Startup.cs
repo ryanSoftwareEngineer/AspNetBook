@@ -10,6 +10,7 @@ using SportsStore.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace SportsStore
 {
     public class Startup
@@ -21,12 +22,27 @@ namespace SportsStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            foreach (var a in services) {
+                var test = a;
+                var test2 = a.ServiceType;
+                var test3 = a.ServiceType.Name;
+                if(test3 == "IServiceProvider")
+                {
+                    var test6 = a.ServiceType;
+                }
+                var test5 = a.ServiceType.FullName;
+            }
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                 Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddTransient<IProductRepository, FakeProductRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
 
 
         }
@@ -38,6 +54,7 @@ namespace SportsStore
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -26,3 +26,5 @@ C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.dll
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.pdb
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.csproj.CopyComplete
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\NavigationMenu\Default.g.cshtml.cs
+C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\Razor\Views\Cart\Index.g.cshtml.cs
+C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Components\CartSummary\Default.g.cshtml.cs
