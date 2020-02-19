@@ -37,8 +37,11 @@ namespace SportsStore
                 options.UseSqlServer(
                 Configuration["Data:SportStoreProducts:ConnectionString"]));
             services.AddTransient<IProductRepository, EFProductRepository>();
+            // so basically whenever a Cart object is wanted.. this lets the middleware pipeline get a SessionCart in it's place.
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+       
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IOrderRepository, EFOrderRepository>();
             //services.AddTransient<IProductRepository, FakeProductRepository>();
             services.AddMvc();
             services.AddMemoryCache();
@@ -59,12 +62,12 @@ namespace SportsStore
             {
                 routes.MapRoute(
                      name: null,
-                     template: "{category}/bargirls{page:int}",
+                     template: "{category}/List{page:int}",
                      defaults: new { Controller = "Product", action = "List" }
                      );
                 routes.MapRoute(
                      name: null,
-                     template: "bargirls{page:int}",
+                     template: "List{page:int}",
                      defaults: new { Controller = "Product", action = "List", page = 1}
                      );
                 routes.MapRoute(
