@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace SportsStore
 {
@@ -22,24 +22,16 @@ namespace SportsStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            foreach (var a in services) {
-                var test = a;
-                var test2 = a.ServiceType;
-                var test3 = a.ServiceType.Name;
-                if(test3 == "IServiceProvider")
-                {
-                    var test6 = a.ServiceType;
-                }
-                var test5 = a.ServiceType.FullName;
-            }
-            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                 Configuration["Data:SportStoreProducts:ConnectionString"]));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:SportStoreIdentity:ConnectionString"]));
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>().AddDefaultTokenProviders();
             services.AddTransient<IProductRepository, EFProductRepository>();
             // so basically whenever a Cart object is wanted.. this lets the middleware pipeline get a SessionCart in it's place.
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
-       
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IOrderRepository, EFOrderRepository>();
             //services.AddTransient<IProductRepository, FakeProductRepository>();
@@ -58,6 +50,7 @@ namespace SportsStore
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -68,7 +61,7 @@ namespace SportsStore
                 routes.MapRoute(
                      name: null,
                      template: "List{page:int}",
-                     defaults: new { Controller = "Product", action = "List", page = 1}
+                     defaults: new { Controller = "Product", action = "List", page = 1 }
                      );
                 routes.MapRoute(
                      name: null,
@@ -83,8 +76,7 @@ namespace SportsStore
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
             SeedData.EnsurePopulated(app);
-
-
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

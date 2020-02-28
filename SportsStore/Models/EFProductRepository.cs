@@ -16,6 +16,17 @@ namespace SportsStore.Models
 
         public IQueryable<ProductModel> Products => context.Products;
 
+        public string DeleteProduct(int productId)
+        {
+            ProductModel dbEntry = context.Products.FirstOrDefault(p => p.ProductId == productId);
+            if (dbEntry != null) {
+                context.Products.Remove(dbEntry);
+                context.SaveChanges();
+            }
+            // return name for display success message
+            return dbEntry.Name;
+        }
+
         public void SaveProduct(ProductModel product)
         {
             if (product.ProductId == 0)
@@ -36,5 +47,7 @@ namespace SportsStore.Models
             }
             context.SaveChanges();
         }
+
+ 
     }
 }
