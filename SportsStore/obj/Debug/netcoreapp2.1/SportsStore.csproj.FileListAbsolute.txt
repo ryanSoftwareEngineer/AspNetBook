@@ -33,3 +33,5 @@ C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.Views.pdb
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.dll
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.pdb
 C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.csproj.CopyComplete
+C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\SportsStore.csprojAssemblyReference.cache
+C:\a\SportsStore\SportsStore\obj\Debug\netcoreapp2.1\Razor\Views\Account\Login.g.cshtml.cs
